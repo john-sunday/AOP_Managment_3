@@ -12,10 +12,8 @@ public class Principal {
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
 		// Obtener el bean del contenedor de Spring.
 		DaoCustomer customer = context.getBean("daoCustomer",DaoCustomer.class);
-		DaoVipCustomer vipCustomer = context.getBean("daoVipCustomer",DaoVipCustomer.class);
-		// Llamar al método.
-		customer.insertCustomer(new Customer("juan","normal"),"NORMAL");
-		vipCustomer.insertVipCustomer();		
+		customer.findCustomer();
+		System.out.println("Here would continue the implementation of the programme");
 		// Cerrar el contexto
 		context.close();
 	}

@@ -1,6 +1,9 @@
 package com.johnsunday.aop.aspects;
 
+import java.util.List;
+
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -14,6 +17,14 @@ import com.johnsunday.aop.main.Customer;
 @Component
 @Order(2)
 public class LoginAspect {
+	
+	@AfterReturning(pointcut="execution(* com.johnsunday.aop.dao.DaoCustomer.findCustomer(..))",returning="ctmsList")	
+	public void taskAfterFindCustomers(List<Customer>ctmsList) {
+		for(Customer c:ctmsList) {
+			if(c.getType().equalsIgnoreCase("vip")) 
+				System.out.println("There are VIP customer in the list -> " + c.getName());
+		}
+	}
 	
 	@Pointcut("execution(* com.johnsunday.aop.dao.*.*(..))")
 	//private void forCustomers() {}

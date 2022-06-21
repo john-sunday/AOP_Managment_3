@@ -5,6 +5,8 @@ public class Customer {
 	private String name;
 	private String type;
 	
+	public Customer() {
+	}
 	public Customer(String name, String type) {
 		this.name = name;
 		this.type = type;
@@ -22,5 +24,8 @@ public class Customer {
 	public void setType(String type) {
 		this.type = type;
 	}
-
+	@Override
+	public String toString() {
+		return "Customer [name=" + name + ", type=" + type + "]";
+	}
 }
