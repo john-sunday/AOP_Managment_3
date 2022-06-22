@@ -12,8 +12,14 @@ public class Principal {
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
 		// Obtener el bean del contenedor de Spring.
 		DaoCustomer customer = context.getBean("daoCustomer",DaoCustomer.class);
-		customer.findCustomer();
-		System.out.println("Here would continue the implementation of the programme");
+		try {
+			boolean myParam = true;		
+			customer.findCustomer(myParam);
+		} catch(Exception e) {			
+			System.out.println("Exception thrown from Principal/Main class");
+			System.out.println(e.getMessage());
+		}
+		System.out.println("Principal/Main class-->Here would continue the implementation of the programme");
 		// Cerrar el contexto
 		context.close();
 	}

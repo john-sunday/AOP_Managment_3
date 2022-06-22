@@ -14,7 +14,10 @@ public class DaoCustomer {
 		System.out.println("Operation OK. Normal Customer inserted Successfully\n");
 	}
 	
-	public List<Customer> findCustomer(){
+	public List<Customer> findCustomer(boolean myParam){
+		// Simulamos lanzamiento de excepción.
+		if(myParam) throw new RuntimeException("Error!!-->Throwing Exception from DaoCustomer.findCustomer() for @AfterThrowing test");
+		
 		List<Customer> customers = new ArrayList<>();
 		// Simulamos clientes devueltos.
 		Customer c1 = new Customer("sandra","vip");

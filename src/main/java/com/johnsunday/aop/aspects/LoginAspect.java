@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -21,11 +22,25 @@ public class LoginAspect {
 	@AfterReturning(pointcut="execution(* com.johnsunday.aop.dao.DaoCustomer.findCustomer(..))",returning="ctmsList")	
 	public void taskAfterFindCustomers(List<Customer>ctmsList) {
 		for(Customer c:ctmsList) {
-			if(c.getType().equalsIgnoreCase("vip")) 
+			if(c.getType().equalsIgnoreCase("vip")) {
+				processDataAfterReturning(ctmsList);
 				System.out.println("There are VIP customer in the list -> " + c.getName());
+			}				
 		}
 	}
 	
+	private void processDataAfterReturning(List<Customer> ctmsList) {
+		for(Customer c:ctmsList) {
+			String processedData = c.getName().toUpperCase();
+			c.setName(processedData);
+		}
+	}
+	
+	@AfterThrowing(pointcut="execution(* com.johnsunday.aop.dao.DaoCustomer.findCustomer(..))",throwing="TheException")
+	public void processingDataAfterExceptionFindCustomers(Throwable TheException) {
+		System.out.println("Here the tasks would be automatically executed after the exception");
+	}
+
 	@Pointcut("execution(* com.johnsunday.aop.dao.*.*(..))")
 	//private void forCustomers() {}
 	// Hacemos público el nombre del pointcut 'forCustomers() para que las
@@ -47,7 +62,7 @@ public class LoginAspect {
 			if(o instanceof Customer) {
 				Customer c = (Customer) o;
 				System.out.println("Name customer: " + c.getName());
-				System.out.println("Name customer: " + c.getType());
+				System.out.println("Type customer: " + c.getType());
 			}
 		}
 	}
