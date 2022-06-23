@@ -13,7 +13,7 @@ public class Principal {
 		// Obtener el bean del contenedor de Spring.
 		DaoCustomer customer = context.getBean("daoCustomer",DaoCustomer.class);
 		try {
-			boolean myParam = true;		
+			boolean myParam = false;		
 			customer.findCustomer(myParam);
 		} catch(Exception e) {			
 			System.out.println("Exception thrown from Principal/Main class");

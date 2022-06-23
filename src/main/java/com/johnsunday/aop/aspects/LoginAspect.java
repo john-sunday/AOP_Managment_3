@@ -3,6 +3,7 @@ package com.johnsunday.aop.aspects;
 import java.util.List;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
@@ -39,6 +40,11 @@ public class LoginAspect {
 	@AfterThrowing(pointcut="execution(* com.johnsunday.aop.dao.DaoCustomer.findCustomer(..))",throwing="TheException")
 	public void processingDataAfterExceptionFindCustomers(Throwable TheException) {
 		System.out.println("Here the tasks would be automatically executed after the exception");
+	}
+	
+	@After("execution(* com.johnsunday.aop.dao.DaoCustomer.findCustomer(..))")
+	public void runningTasksWithWithoutException(JoinPoint joinPoint) {
+		System.out.println("Running tasks always !!!");
 	}
 
 	@Pointcut("execution(* com.johnsunday.aop.dao.*.*(..))")
