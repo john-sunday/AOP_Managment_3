@@ -3,9 +3,11 @@ package com.johnsunday.aop.aspects;
 import java.util.List;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -45,6 +47,21 @@ public class LoginAspect {
 	@After("execution(* com.johnsunday.aop.dao.DaoCustomer.findCustomer(..))")
 	public void runningTasksWithWithoutException(JoinPoint joinPoint) {
 		System.out.println("Running tasks always !!!");
+	}
+	
+	// Método que se ejecuta antes y después(realizando tareas de
+	// pre-procesado y post-procesado) del método getService() de la 
+	// clase MeasurementService.
+	@Around("execution(* com.johnsunday.aop.services.*.getService(..))")
+	public Object runService(ProceedingJoinPoint point) throws Throwable {
+		System.out.println("----- Tasks BEFORE calling -> pre-processing ------");
+		long start = System.currentTimeMillis();
+		Object result = point.proceed(); // 'point' apunta al método destino-->getService()
+		System.out.println("----- Tasks AFTER calling -> post-processing ------");
+		long end = System.currentTimeMillis();
+		long duration = end - start;
+		System.out.println("Dutation method = " + duration/1000 + " seconds");
+		return result;
 	}
 
 	@Pointcut("execution(* com.johnsunday.aop.dao.*.*(..))")

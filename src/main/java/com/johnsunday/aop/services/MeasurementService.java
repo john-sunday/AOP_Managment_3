@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 public class MeasurementService {
 
 	public String getService() {
+		// Simulamos que el método realiza tareas.
 		System.out.println("**** THE METHOD IS PERFORMING TASKS ****");		
 		try {
 			// Dormimos el hilo 4 segundos, simulando tareas/procesos.
